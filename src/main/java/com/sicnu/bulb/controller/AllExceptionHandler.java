@@ -1,7 +1,7 @@
 package com.sicnu.bulb.controller;
 
-import com.sicnu.bulb.msg.Msg;
-import com.sicnu.bulb.msg.ResultCode;
+import com.sicnu.bulb.entity.msg.Msg;
+import com.sicnu.bulb.entity.msg.ResultCode;
 import com.sicnu.bulb.util.LoggerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

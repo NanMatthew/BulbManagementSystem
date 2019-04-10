@@ -1,4 +1,4 @@
-package com.sicnu.bulb.msg;
+package com.sicnu.bulb.entity.msg;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

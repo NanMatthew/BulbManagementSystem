@@ -35,7 +35,7 @@ Configuration:
       Policies:
         SizeBasedTriggeringPolicy:
           size: 512MB
-    #处理INFO级别的日志，并把该日志放到tomcat根目录/bin/logs/info.log文件中
+    #处理INFO级别的日志，并把该日志放到tomcat根目录/bin/logs/bulb/info.log文件中
     - name: RollingFileInfo
       fileName: ./logs/bulb/info.log
       filePattern: "logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz"

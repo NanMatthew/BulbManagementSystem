@@ -1,0 +1,99 @@
+package com.sicnu.bulb.entity.table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.util.Date;
+
+/**
+ * Created by HY
+ * 2019/4/10 21:29
+ *
+ * 盘存表
+ */
+@SuppressWarnings("unused")
+@Entity
+@Table(name = "tb_inventory")
+public class Inventory {
+
+    /**
+     * id
+     * <p>
+     * 自增序列
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    /**
+     * 产品id
+     * 外键关联Product表
+     */
+    @Column(nullable = false)
+    private int productId;
+
+
+    /**
+     * 实际库存
+     */
+    @Column(nullable = false)
+    private long realInventory;
+
+    /**
+     * 盘存时间
+     */
+    @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date inventoryTime;
+
+    /**
+     * 备注
+     */
+    private String intro;
+
+
+    public Inventory() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public long getRealInventory() {
+        return realInventory;
+    }
+
+    public void setRealInventory(long realInventory) {
+        this.realInventory = realInventory;
+    }
+
+    public Date getInventoryTime() {
+        return inventoryTime;
+    }
+
+    public void setInventoryTime(Date inventoryTime) {
+        this.inventoryTime = inventoryTime;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
+}
