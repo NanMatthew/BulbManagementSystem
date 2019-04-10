@@ -1,0 +1,48 @@
+spring:
+  datasource: #数据库相关
+    url: jdbc:mysql://101.132.32.72:3306/bulb?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: SQpw1ssKN9HTvIZSxkLYvcDS1IQ6u0a+8uLHItBJ7Vyun6PUhjPuM3iOH6YrPGJQjtZH1HaIbFofxMuuN8OkJQ==
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #dataSource类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    #    2.0之后新特性 不加就不会自动建表
+    initialization-mode: always
+
+    #druid配置
+    druid:
+      initial-size: 5  #初始化连接数
+      max-active: 20 #最大连接数
+      min-idle: 5 #最小连接数
+      max-wait: 6000 #最大等待时间
+      connect-properties: config.decrypt=true;config.decrypt.key=${spring.datasource.druid.config.key}
+      #开启监控页面
+      stat-view-servlet:
+        enabled: true
+        login-password: 123456
+        login-username: admin
+      #开启Web监控
+      web-stat:
+        enabled: true
+      #开启AOP监控
+      aop-stat:
+        enabled: true
+      #开启WallFilter
+      wall:
+        enabled: true
+        throw-exception: true
+      config:
+        enabled: true
+        #加密秘钥
+        key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALF2PdYVbAnn98jxMWXWyFnMkCSc0ySF0/ll+i7cS5nENis9cbHWtOGn+Hb6+7c2h6PYZrjwOkFKC5F/veMAJBUCAwEAAQ==
+
+  jackson:
+    time-zone: GMT+8 #设置时区
+    date-format: yyyy-MM-dd HH:mm:ss  #日期转换格式
+  jpa:
+    show-sql: true #显示sql语句
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect #使用InnoDB引擎 不加这句则默认为myisam引擎
+  mvc:
+    throw-exception-if-no-handler-found: true #没有绑定的url直接抛出错误
+  resources:
+    add-mappings: false  #不为静态文件建立映射
