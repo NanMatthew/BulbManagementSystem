@@ -11,10 +11,21 @@ spring:
 
     #druid配置
     druid:
+
       initial-size: 5  #初始化连接数
       max-active: 20 #最大连接数
       min-idle: 5 #最小连接数
       max-wait: 6000 #最大等待时间
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      #配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      #获取连接时执行检测，建议关闭，影响性能
+      test-on-borrow: false
+      #归还连接时执行检测，建议关闭，影响性能
+      test-on-return: false
+      #是否开启PSCache，PSCache对支持游标的数据库性能提升巨大，oracle建议开启，mysql下建议关闭
+      pool-prepared-statements: false
       connect-properties: config.decrypt=true;config.decrypt.key=${spring.datasource.druid.config.key}
       #开启监控页面
       stat-view-servlet:
@@ -27,13 +38,16 @@ spring:
       #开启AOP监控
       aop-stat:
         enabled: true
+      #开启log4j2
+      log4j2:
+        enabled: true
       #开启WallFilter
       wall:
         enabled: true
         throw-exception: true
       config:
         enabled: true
-        #加密秘钥
+        #加密秘钥（publicKey）
         key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALF2PdYVbAnn98jxMWXWyFnMkCSc0ySF0/ll+i7cS5nENis9cbHWtOGn+Hb6+7c2h6PYZrjwOkFKC5F/veMAJBUCAwEAAQ==
 
   jackson:
@@ -41,8 +55,11 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss  #日期转换格式
   jpa:
     show-sql: true #显示sql语句
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect #使用InnoDB引擎 不加这句则默认为myisam引擎
+    #使用InnoDB引擎 不加这句则默认为myisam引擎
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   mvc:
     throw-exception-if-no-handler-found: true #没有绑定的url直接抛出错误
   resources:
     add-mappings: false  #不为静态文件建立映射
+logging:
+  config: classpath:log4j2.yml
