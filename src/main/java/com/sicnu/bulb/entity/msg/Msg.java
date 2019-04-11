@@ -49,6 +49,16 @@ public class Msg {
     }
 
     /**
+     * 生成错误的Msg对象
+     *
+     * @param info info
+     * @return Msg
+     */
+    public static Msg errorMsg(String info) {
+        return new Msg(ResultCode.RESULT_CODE_ERROR, info);
+    }
+
+    /**
      * 消息是否正确
      *
      * @return 消息是否正确

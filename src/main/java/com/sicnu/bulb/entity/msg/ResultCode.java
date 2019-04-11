@@ -19,6 +19,21 @@ public class ResultCode {
      */
     public static final int RESULT_CODE_ERROR = 1;
 
+    /**
+     * 预期之外的错误
+     */
+    public static final int RESULT_CODE_NOT_KNOWN_ERROR = -100;
+
+    /**
+     * 用户名不存在
+     */
+    public static final int RESULT_CODE_USER_NOT_EXIST = -101;
+
+    /**
+     * 密码错误
+     */
+    public static final int RESULT_CODE_ERROR_PASSWORD = -102;
+
 
     /**
      * 404
