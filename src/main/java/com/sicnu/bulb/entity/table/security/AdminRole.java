@@ -26,7 +26,7 @@ public class AdminRole {
      * 管理员Id
      */
     @Column(nullable = false,length = 9)
-    private String adminId;
+    private String username;
 
     /**
      * 角色id
@@ -58,12 +58,12 @@ public class AdminRole {
         this.roleId = roleId;
     }
 
-    public String getAdminId() {
-        return adminId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setAdminId(String adminId) {
-        this.adminId = adminId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getIntro() {

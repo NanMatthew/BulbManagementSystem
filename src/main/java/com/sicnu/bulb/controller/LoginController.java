@@ -2,14 +2,17 @@ package com.sicnu.bulb.controller;
 
 import com.sicnu.bulb.entity.msg.Msg;
 import com.sicnu.bulb.entity.msg.ResultCode;
-import com.sicnu.bulb.entity.table.Admin;
 import com.sicnu.bulb.repository.AdminRepository;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
 
 /**
  * Created by HY
@@ -37,22 +40,29 @@ public class LoginController {
     @PostMapping("/login")
     public Msg Login(@RequestParam("username") String username,
                      @RequestParam("password") String password) {
+        /*
+          使用Shiro编写认证操作
+         */
+        //1.获取Subject
+        Subject subject = SecurityUtils.getSubject();
+
+        //2.封装用户数据
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+
+        //3.执行登录方法
         try {
-            Optional<Admin> optionalAdmin = adminRepository.findById(username);
-            if (optionalAdmin.isPresent()) {
-                Admin admin = optionalAdmin.get();
-                if (password.equals(admin.getPassword())) {
-                    return new Msg("登录成功！");
-                } else {
-                    return new Msg(ResultCode.RESULT_CODE_ERROR_PASSWORD, "密码错误");
-                }
-            } else {
-                return new Msg(ResultCode.RESULT_CODE_USER_NOT_EXIST, "该用户不存在");
-            }
-        } catch (Exception e) {
+            //将跳转到UserRealm中去
+            subject.login(token);
+        } catch (UnknownAccountException e) {
             e.printStackTrace();
-            return Msg.errorMsg(e.getMessage());
+            //登录失败
+            return new Msg(ResultCode.RESULT_CODE_USER_NOT_EXIST);
+        } catch (IncorrectCredentialsException e) {
+            e.printStackTrace();
+            //密码错误
+            return new Msg(ResultCode.RESULT_CODE_ERROR_PASSWORD);
         }
+        return new Msg("登录成功");
     }
 
 }

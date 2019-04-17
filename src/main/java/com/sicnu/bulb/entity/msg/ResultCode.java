@@ -1,5 +1,6 @@
 package com.sicnu.bulb.entity.msg;
 
+
 /**
  * Created by HY
  * 2019/4/3 19:32
@@ -33,6 +34,16 @@ public class ResultCode {
      * 密码错误
      */
     public static final int RESULT_CODE_ERROR_PASSWORD = -102;
+
+    /**
+     * 未登录就请求其他页面
+     */
+    public static final int RESULT_CODE_NEED_LOGIN = -103;
+
+    /**
+     * 未授权
+     */
+    public static final int RESULT_CODE_NO_PERMISSION = -104;
 
 
     /**

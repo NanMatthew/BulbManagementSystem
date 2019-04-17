@@ -4,9 +4,7 @@ import com.sicnu.bulb.entity.table.Stock;
 import com.sicnu.bulb.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,9 +34,18 @@ public class TestController {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return "";
     }
 
+    @RequestMapping("/testSelect")
+    public String testSelect() {
+        return "testSelect";
+    }
+
+    @RequestMapping("/testAdd")
+    public String testAdd() {
+        return "testAdd";
+    }
 
     @RequestMapping("/test/stock/{id}")
     public Stock testStock(@PathVariable int id) {

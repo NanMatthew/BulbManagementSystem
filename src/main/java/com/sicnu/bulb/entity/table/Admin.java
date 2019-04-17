@@ -1,9 +1,10 @@
 package com.sicnu.bulb.entity.table;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sicnu.bulb.entity.table.security.Role;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by HY
@@ -49,6 +50,15 @@ public class Admin {
      */
     private String intro;
 
+    /**
+     * 角色列表
+     * <p>
+     * 一个用户可以有多个角色
+     */
+    @ManyToMany(fetch = FetchType.EAGER)  //立即从数据库中加载数据
+    @JoinTable(name = "tb_admin_role", joinColumns = {@JoinColumn(name = "username")}, inverseJoinColumns = {@JoinColumn(name = "roleId")})
+    private List<Role> roleList;
+
     public Admin() {
     }
 
@@ -58,6 +68,15 @@ public class Admin {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @JsonIgnore
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 
     public String getPassword() {

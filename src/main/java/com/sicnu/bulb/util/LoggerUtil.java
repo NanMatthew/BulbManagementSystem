@@ -10,7 +10,7 @@ import org.slf4j.Logger;
  */
 public class LoggerUtil {
 
-    private static final String hint = "=================别怕，这是自己打印的Exception=================";
+    private static final String hint = "=================自己拦截的Exception=================";
 
     public static void errorLog(String exceptionHandler, Logger logger, Exception e) {
         System.out.println(hint);
