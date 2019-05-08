@@ -1,7 +1,9 @@
 package com.sicnu.bulb.controller;
 
+import com.sicnu.bulb.entity.msg.LoginMsg;
 import com.sicnu.bulb.entity.msg.Msg;
 import com.sicnu.bulb.entity.msg.ResultCode;
+import com.sicnu.bulb.entity.table.Admin;
 import com.sicnu.bulb.repository.AdminRepository;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -10,6 +12,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -62,7 +65,18 @@ public class LoginController {
             //密码错误
             return new Msg(ResultCode.RESULT_CODE_ERROR_PASSWORD);
         }
-        return new Msg("登录成功");
+        Admin admin = (Admin) subject.getPrincipals().getPrimaryPrincipal();
+        return new LoginMsg(admin.getRoleList().get(0).getRoleId());
+    }
+
+    /**
+     * 退出登录
+     */
+    @RequestMapping("/logout")
+    public Msg logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return new Msg("退出登录成功");
     }
 
 }
