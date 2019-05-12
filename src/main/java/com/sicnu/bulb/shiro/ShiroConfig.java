@@ -44,11 +44,14 @@ public class ShiroConfig {
         //放行
         filterMap.put("/test", "anon");
         filterMap.put("/login", "anon");
+        filterMap.put("/test/testPermission", "anon");
 
         //授权过滤器
         //注意：当前授权拦截后，shiro会自动跳转到未授权页面
         filterMap.put("/testSelect", "perms[selectTest]");
         filterMap.put("/testAdd", "perms[addTest]");
+        //获取所有产品
+        filterMap.put("/getAllProducts", "perms[getAllProducts]");
 
         //必须认证（登录）
         filterMap.put("/*", "authc");

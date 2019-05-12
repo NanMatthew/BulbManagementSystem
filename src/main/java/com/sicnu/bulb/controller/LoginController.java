@@ -43,9 +43,8 @@ public class LoginController {
     @PostMapping("/login")
     public Msg Login(@RequestParam("username") String username,
                      @RequestParam("password") String password) {
-        /*
-          使用Shiro编写认证操作
-         */
+
+        // 使用Shiro编写认证操作
         //1.获取Subject
         Subject subject = SecurityUtils.getSubject();
 
@@ -58,7 +57,7 @@ public class LoginController {
             subject.login(token);
         } catch (UnknownAccountException e) {
             e.printStackTrace();
-            //登录失败
+            //用户名不存在
             return new Msg(ResultCode.RESULT_CODE_USER_NOT_EXIST);
         } catch (IncorrectCredentialsException e) {
             e.printStackTrace();
