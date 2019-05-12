@@ -79,4 +79,14 @@ public class Permission {
     public void setIntro(String intro) {
         this.intro = intro;
     }
+
+    @Override
+    public String toString() {
+        return "Permission{" +
+                "permissionId=" + permissionId +
+                ", permission='" + permission + '\'' +
+                ", intro='" + intro + '\'' +
+                ", roleList=" + roleList +
+                '}';
+    }
 }
