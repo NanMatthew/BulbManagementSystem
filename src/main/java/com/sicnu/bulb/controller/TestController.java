@@ -3,6 +3,8 @@ package com.sicnu.bulb.controller;
 import com.sicnu.bulb.entity.table.Admin;
 import com.sicnu.bulb.entity.table.Stock;
 import com.sicnu.bulb.entity.table.security.Permission;
+import com.sicnu.bulb.entity.view.InboundList;
+import com.sicnu.bulb.repository.InboundListRepository;
 import com.sicnu.bulb.repository.StockRepository;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -22,10 +24,12 @@ import java.util.List;
 public class TestController {
 
     private final StockRepository stockRepository;
+    private final InboundListRepository inboundListRepository;
 
     @Autowired
-    public TestController(StockRepository stockRepository) {
+    public TestController(StockRepository stockRepository, InboundListRepository inboundListRepository) {
         this.stockRepository = stockRepository;
+        this.inboundListRepository = inboundListRepository;
     }
 
     @RequestMapping("/test")
@@ -58,10 +62,15 @@ public class TestController {
     }
 
     @RequestMapping("/test/testPermission")
-    public List<Permission> testPermission(){
+    public List<Permission> testPermission() {
         Subject subject = SecurityUtils.getSubject();
 
         Admin admin = (Admin) subject.getPrincipals().getPrimaryPrincipal();
         return admin.getRoleList().get(0).getPermissionList();
+    }
+
+    @RequestMapping("/test/testInboundList")
+    public List<InboundList> testInboundList() {
+        return inboundListRepository.findAll();
     }
 }

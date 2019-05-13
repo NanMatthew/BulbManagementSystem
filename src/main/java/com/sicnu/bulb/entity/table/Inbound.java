@@ -64,6 +64,10 @@ public class Inbound {
     @Column(length = 20, columnDefinition = "bit(1) default false")
     private boolean checkState;
 
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinTable(name = "tb_product", joinColumns = {@JoinColumn(name = "product_id")}, inverseJoinColumns = {@JoinColumn(name = "id")})
+//    private Product product;
+
     /**
      * 备注
      */
@@ -87,6 +91,14 @@ public class Inbound {
     public void setIntro(String intro) {
         this.intro = intro;
     }
+
+//    public Product getProduct() {
+//        return product;
+//    }
+//
+//    public void setProduct(Product product) {
+//        this.product = product;
+//    }
 
     public int getProductId() {
         return productId;

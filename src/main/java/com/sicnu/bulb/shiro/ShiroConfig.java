@@ -44,7 +44,7 @@ public class ShiroConfig {
         //放行
         filterMap.put("/test", "anon");
         filterMap.put("/login", "anon");
-        filterMap.put("/test/testPermission", "anon");
+        filterMap.put("/test/*", "anon");
 
         //授权过滤器
         //注意：当前授权拦截后，shiro会自动跳转到未授权页面
@@ -52,6 +52,8 @@ public class ShiroConfig {
         filterMap.put("/testAdd", "perms[addTest]");
         //获取所有产品
         filterMap.put("/getAllProducts", "perms[getAllProducts]");
+        //获取入库流水账表
+        filterMap.put("/getInboundList", "perms[getInboundList]");
         //管理员的增删改查功能 需要拥有系统管理员角色
         filterMap.put("/admin/*", "roles[sys]");
 
