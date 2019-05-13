@@ -1,4 +1,4 @@
-package com.sicnu.bulb.shiro;
+package com.sicnu.bulb.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

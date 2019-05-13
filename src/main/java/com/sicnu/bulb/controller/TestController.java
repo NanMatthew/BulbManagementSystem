@@ -6,6 +6,7 @@ import com.sicnu.bulb.entity.table.Outbound;
 import com.sicnu.bulb.entity.table.Stock;
 import com.sicnu.bulb.entity.table.security.Permission;
 import com.sicnu.bulb.entity.view.InboundList;
+import com.sicnu.bulb.selflog.OperationLog;
 import com.sicnu.bulb.repository.InboundListRepository;
 import com.sicnu.bulb.repository.OrderRepository;
 import com.sicnu.bulb.repository.OutboundRepository;
@@ -93,6 +94,7 @@ public class TestController {
         return orderList;
     }
 
+    @OperationLog(description = "测试")
     @RequestMapping("/test/testOutboundList")
     public List<com.sicnu.bulb.entity.Outbound> testOutboundList() {
         List<com.sicnu.bulb.entity.Outbound> outbounds = new ArrayList<>();
