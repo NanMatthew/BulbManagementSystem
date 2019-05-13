@@ -54,6 +54,8 @@ public class ShiroConfig {
         filterMap.put("/getAllProducts", "perms[getAllProducts]");
         //获取入库流水账表
         filterMap.put("/getInboundList", "perms[getInboundList]");
+        //获取订单列表
+        filterMap.put("/getOrderList", "perms[getOrderList]");
         //管理员的增删改查功能 需要拥有系统管理员角色
         filterMap.put("/admin/*", "roles[sys]");
 

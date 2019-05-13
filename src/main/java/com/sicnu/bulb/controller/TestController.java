@@ -1,10 +1,12 @@
 package com.sicnu.bulb.controller;
 
 import com.sicnu.bulb.entity.table.Admin;
+import com.sicnu.bulb.entity.table.Order;
 import com.sicnu.bulb.entity.table.Stock;
 import com.sicnu.bulb.entity.table.security.Permission;
 import com.sicnu.bulb.entity.view.InboundList;
 import com.sicnu.bulb.repository.InboundListRepository;
+import com.sicnu.bulb.repository.OrderRepository;
 import com.sicnu.bulb.repository.StockRepository;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,11 +28,13 @@ public class TestController {
 
     private final StockRepository stockRepository;
     private final InboundListRepository inboundListRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
-    public TestController(StockRepository stockRepository, InboundListRepository inboundListRepository) {
+    public TestController(StockRepository stockRepository, InboundListRepository inboundListRepository, OrderRepository orderRepository) {
         this.stockRepository = stockRepository;
         this.inboundListRepository = inboundListRepository;
+        this.orderRepository = orderRepository;
     }
 
     @RequestMapping("/test")
@@ -73,4 +78,16 @@ public class TestController {
     public List<InboundList> testInboundList() {
         return inboundListRepository.findAll();
     }
+
+    @RequestMapping("/test/testOrderList")
+    public List<com.sicnu.bulb.entity.Order> testOrderList() {
+        List<Order> all = orderRepository.findAll();
+        List<com.sicnu.bulb.entity.Order> orderList = new ArrayList<>();
+        for (Order order : all) {
+            orderList.add(new com.sicnu.bulb.entity.Order(order));
+        }
+        return orderList;
+    }
+
+
 }

@@ -1,11 +1,11 @@
 package com.sicnu.bulb.entity.table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by HY
@@ -27,11 +27,27 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+
+    @OneToMany(fetch = FetchType.EAGER)  //立即从数据库中加载数据
+    @JoinTable(name = "tb_order_products", joinColumns = {@JoinColumn(name = "orderId")}, inverseJoinColumns = {@JoinColumn(name = "productId")})
+    private List<Product> productList;
+
     /**
-     * 订单列表（productItem）
+     * 商品订单列表
+     * <p>
+     * 一个订单有多件商品
      */
-    @ColumnDefault("'[]'")
-    private String productList;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "orderId")
+    private List<OrderProducts> orderProducts;
+
+    public List<OrderProducts> getOrderProducts() {
+        return orderProducts;
+    }
+
+    public void setOrderProducts(List<OrderProducts> orderProducts) {
+        this.orderProducts = orderProducts;
+    }
 
     /**
      * 订单时间
@@ -63,11 +79,11 @@ public class Order {
         this.id = id;
     }
 
-    public String getProductList() {
+    public List<Product> getProductList() {
         return productList;
     }
 
-    public void setProductList(String productList) {
+    public void setProductList(List<Product> productList) {
         this.productList = productList;
     }
 
