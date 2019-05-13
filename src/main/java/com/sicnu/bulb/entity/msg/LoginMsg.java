@@ -1,5 +1,7 @@
 package com.sicnu.bulb.entity.msg;
 
+import com.sicnu.bulb.entity.table.Admin;
+
 /**
  * Created by HY
  * 2019/5/8 18:59
@@ -16,13 +18,13 @@ public class LoginMsg extends Msg {
         setResultCode(ResultCode.RESULT_CODE_CORRECT);
         switch (userType) {
             case 1://系统管理员
-                setInfo("系统管理员");
+                setInfo(Admin.ADMIN_TYPE_SYS);
                 break;
             case 2://财务管理员
-                setInfo("财务管理员");
+                setInfo(Admin.ADMIN_TYPE_FINANCE);
                 break;
             case 3://仓库管理员
-                setInfo("仓库管理员");
+                setInfo(Admin.ADMIN_TYPE_WAREHOUSE);
                 break;
         }
         this.userType = userType;

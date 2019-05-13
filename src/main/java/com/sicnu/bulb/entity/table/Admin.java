@@ -17,6 +17,12 @@ import java.util.List;
 @Table(name = "tb_admin")
 public class Admin {
 
+    public static final String ADMIN_TYPE_SYS = "系统管理员";
+
+    public static final String ADMIN_TYPE_FINANCE = "财务管理员";
+
+    public static final String ADMIN_TYPE_WAREHOUSE = "仓库管理员";
+
     /**
      * 用户名/工号
      * <p>
@@ -60,6 +66,16 @@ public class Admin {
     private List<Role> roleList;
 
     public Admin() {
+    }
+
+    /**
+     * 对象是否合法
+     * <p>
+     * 针对AdminController传入的admin对象
+     */
+    public boolean checkInvalid() {
+        return username != null && password != null
+                && name != null && phoneNumber != null;
     }
 
     public String getUsername() {

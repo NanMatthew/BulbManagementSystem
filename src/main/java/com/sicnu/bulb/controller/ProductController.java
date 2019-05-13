@@ -27,7 +27,7 @@ public class ProductController {
     /**
      * 获取所有产品列表
      */
-    @RequestMapping("getAllProducts")
+    @RequestMapping("/getAllProducts")
     public Msg getAllProducts() {
         try {
             List<Product> products = productRepository.findAll();
