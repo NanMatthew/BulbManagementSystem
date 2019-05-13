@@ -2,11 +2,13 @@ package com.sicnu.bulb.controller;
 
 import com.sicnu.bulb.entity.table.Admin;
 import com.sicnu.bulb.entity.table.Order;
+import com.sicnu.bulb.entity.table.Outbound;
 import com.sicnu.bulb.entity.table.Stock;
 import com.sicnu.bulb.entity.table.security.Permission;
 import com.sicnu.bulb.entity.view.InboundList;
 import com.sicnu.bulb.repository.InboundListRepository;
 import com.sicnu.bulb.repository.OrderRepository;
+import com.sicnu.bulb.repository.OutboundRepository;
 import com.sicnu.bulb.repository.StockRepository;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -29,12 +31,14 @@ public class TestController {
     private final StockRepository stockRepository;
     private final InboundListRepository inboundListRepository;
     private final OrderRepository orderRepository;
+    private final OutboundRepository outboundRepository;
 
     @Autowired
-    public TestController(StockRepository stockRepository, InboundListRepository inboundListRepository, OrderRepository orderRepository) {
+    public TestController(StockRepository stockRepository, InboundListRepository inboundListRepository, OrderRepository orderRepository, OutboundRepository outboundRepository) {
         this.stockRepository = stockRepository;
         this.inboundListRepository = inboundListRepository;
         this.orderRepository = orderRepository;
+        this.outboundRepository = outboundRepository;
     }
 
     @RequestMapping("/test")
@@ -89,5 +93,13 @@ public class TestController {
         return orderList;
     }
 
+    @RequestMapping("/test/testOutboundList")
+    public List<com.sicnu.bulb.entity.Outbound> testOutboundList() {
+        List<com.sicnu.bulb.entity.Outbound> outbounds = new ArrayList<>();
+        for (Outbound outbound : outboundRepository.findAll()) {
+            outbounds.add(new com.sicnu.bulb.entity.Outbound(outbound));
 
+        }
+        return outbounds;
+    }
 }

@@ -1,71 +1,61 @@
-package com.sicnu.bulb.entity.table;
+package com.sicnu.bulb.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by HY
- * 2019/4/10 22:13
+ * 2019/5/13 21:19
  * <p>
- * 出库表
+ * 对应一个出库单
  */
 @SuppressWarnings("unused")
-@Entity
-@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-@Table(name = "tb_outbound")
 public class Outbound {
 
-    /**
-     * id
-     * <p>
-     * 自增序列
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //出库单id
     private int id;
 
-    /**
-     * 订单id
-     */
-    @Column(nullable = false)
+    //订单id
     private int orderId;
-
-    //insertable=false,updatable=false  要求要加
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "orderId", insertable = false, updatable = false)
-    private Order order;
 
     /**
      * 出库时间
      */
-    @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date outboundTime;
 
     /**
+     * 对应的订单信息
+     */
+    private Order order;
+
+    /**
      * 仓库
      */
-    @Column(nullable = false, length = 20)
     private String warehouse;
 
     /**
      * 负责人
      */
-    @Column(nullable = false, length = 20)
     private String principal;
-
 
     /**
      * 备注
      */
     private String intro;
 
-    public Outbound() {
+
+    public Outbound(com.sicnu.bulb.entity.table.Outbound outbound) {
+        this.id = outbound.getId();
+        this.orderId = outbound.getOrderId();
+        this.outboundTime = outbound.getOutboundTime();
+        this.principal = outbound.getPrincipal();
+        this.intro = outbound.getIntro();
+        this.warehouse = outbound.getWarehouse();
+        this.order = new Order(outbound.getOrder());
     }
 
     public int getId() {
@@ -74,14 +64,6 @@ public class Outbound {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
     public int getOrderId() {
@@ -100,20 +82,20 @@ public class Outbound {
         this.outboundTime = outboundTime;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
     public String getWarehouse() {
         return warehouse;
     }
 
     public void setWarehouse(String warehouse) {
         this.warehouse = warehouse;
-    }
-
-    public String getIntro() {
-        return intro;
-    }
-
-    public void setIntro(String intro) {
-        this.intro = intro;
     }
 
     public String getPrincipal() {
@@ -124,5 +106,11 @@ public class Outbound {
         this.principal = principal;
     }
 
+    public String getIntro() {
+        return intro;
+    }
 
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
 }
