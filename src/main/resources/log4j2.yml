@@ -1,7 +1,7 @@
 Configuration:
   status: OFF
   name: YAMLConfigTest
-  properties:
+  properties: # 定义全局变量
     property:
       name: filename
       value: target/test-yaml.log
@@ -22,7 +22,7 @@ Configuration:
     RollingFile:
     #打印出DEBUG级别日志，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档
     - name: RollingFileDebug
-      fileName: ./logs/bulb/debug.log
+      fileName: /logs/bulb/debug.log
       filePattern: "logs/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
         Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
@@ -37,7 +37,7 @@ Configuration:
           size: 512MB
     #处理INFO级别的日志，并把该日志放到tomcat根目录/bin/logs/bulb/info.log文件中
     - name: RollingFileInfo
-      fileName: ./logs/bulb/info.log
+      fileName: /logs/bulb/info.log
       filePattern: "logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
         Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
@@ -51,9 +51,48 @@ Configuration:
       Policies:
         SizeBasedTriggeringPolicy:
           size: 512MB
+
+
+    #操作日志
+    - name: operationLog
+      ignoreExceptions: false
+      fileName: D:/logs/bulb/operation.log
+      filePattern: "logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz"
+      PatternLayout:
+        Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
+      Filters:
+        #只接受INFO级别的日志，其余的全部拒绝处理
+        ThresholdFilter:
+        - level: INFO
+        - level: WARN
+          onMatch: DENY
+          onMismatch: NEUTRAL
+      Policies:
+        SizeBasedTriggeringPolicy:
+          size: 512MB
+
+    #登录日志
+    - name: loginLog
+      ignoreExceptions: false
+      fileName: D:/logs/bulb/login.log
+      filePattern: "logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz"
+      PatternLayout:
+        Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
+      Filters:
+        #只接受INFO级别的日志，其余的全部拒绝处理
+        ThresholdFilter:
+        - level: INFO
+        - level: WARN
+          onMatch: DENY
+          onMismatch: NEUTRAL
+      Policies:
+        SizeBasedTriggeringPolicy:
+          size: 512MB
+
+
     #处理WARN级别的日志，并把该日志放到logs/warn.log文件中
     - name: RollingFileWarn
-      fileName: ./logs/bulb/warn.log
+      fileName: /logs/bulb/warn.log
       filePattern: "logs/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
         Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
@@ -68,7 +107,7 @@ Configuration:
           size: 512MB
     #处理error级别的日志，并把该日志放到logs/error.log文件中
     - name: RollingFileError
-      fileName: ./logs/bulb/error.log
+      fileName: /logs/bulb/error.log
       filePattern: "logs/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
         Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
@@ -79,7 +118,7 @@ Configuration:
           size: 512MB
     #druid的日志记录追加器
     - name: druidSqlRollingFile
-      fileName: ./logs/bulb/druid-sql.log
+      fileName: /logs/bulb/druid-sql.log
       filePattern: "logs/$${date:yyyy-MM}/api-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
         Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %L %M - %msg%xEx%n"
@@ -94,8 +133,21 @@ Configuration:
       additivity: false
       appender-ref:
         ref: druidSqlRollingFile
-    #log4j2 自带过滤日志
+    #selflog 自带过滤日志
     Logger:
+
+    - name: operation
+      level: info
+      additivity: false
+      AppenderRef:
+      - ref: operationLog
+
+    - name: login
+      level: info
+      additivity: false
+      AppenderRef:
+      - ref: loginLog
+
     - name: org.apache.catalina.startup.DigesterFactory
       level: error
     - name: org.apache.catalina.util.LifecycleBase
