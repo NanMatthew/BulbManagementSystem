@@ -37,7 +37,7 @@ public class ShiroConfig {
                 authc: 必须认证才可以访问
                 user: 如果使用rememberMe的功能可以直接访问
                 perms： 该资源必须得到资源权限才可以访问
-                role: 该资源必须得到角色权限才可以访问
+                roles: 该资源必须得到角色权限才可以访问
          */
         Map<String, String> filterMap = new LinkedHashMap<>();
 
@@ -52,6 +52,8 @@ public class ShiroConfig {
         filterMap.put("/testAdd", "perms[addTest]");
         //获取所有产品
         filterMap.put("/getAllProducts", "perms[getAllProducts]");
+        //管理员的增删改查功能 需要拥有系统管理员角色
+        filterMap.put("/admin/*", "roles[sys]");
 
         //必须认证（登录）
         filterMap.put("/*", "authc");

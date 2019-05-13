@@ -42,6 +42,10 @@ public class AdminRole {
     public AdminRole() {
     }
 
+    public AdminRole(String username) {
+        this.username = username;
+    }
+
     public int getId() {
         return id;
     }
