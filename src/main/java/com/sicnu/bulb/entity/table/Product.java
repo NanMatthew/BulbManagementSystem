@@ -57,6 +57,22 @@ public class Product {
     private float cost;
 
     /**
+     * 产品零售单价
+     * <p>
+     * 不能为空
+     */
+    @Column(nullable = false)
+    private float resale;
+
+    /**
+     * 产品批发单价
+     * <p>
+     * 不能为空
+     */
+    @Column(nullable = false)
+    private float batch;
+
+    /**
      * 产品最大储备量
      * <p>
      * 不能为空
@@ -118,6 +134,22 @@ public class Product {
 
     public void setCost(float cost) {
         this.cost = cost;
+    }
+
+    public float getResale() {
+        return resale;
+    }
+
+    public void setResale(float resale) {
+        this.resale = resale;
+    }
+
+    public float getBatch() {
+        return batch;
+    }
+
+    public void setBatch(float batch) {
+        this.batch = batch;
     }
 
     public long getMaxCount() {
