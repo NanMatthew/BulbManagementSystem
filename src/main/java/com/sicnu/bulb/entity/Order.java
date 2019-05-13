@@ -1,7 +1,9 @@
 package com.sicnu.bulb.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sicnu.bulb.entity.table.OrderProducts;
 import com.sicnu.bulb.entity.table.Product;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +25,8 @@ public class Order {
     private List<ProductItem> products;
 
     //订单时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date orderTime;
 
     //厂商
