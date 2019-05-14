@@ -14,8 +14,8 @@ import java.util.List;
  * 订单表
  */
 @SuppressWarnings("unused")
-@Entity
-@Table(name = "tb_order")
+//@Entity
+//@Table(name = "tb_order")
 public class Order {
 
     /**
@@ -53,8 +53,8 @@ public class Order {
      * 订单时间
      */
     @Column(nullable = false)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date orderTime;
 
     /**

@@ -73,6 +73,12 @@ public class InboundController {
         }
     }
 
+    /**
+     * 删除入库单
+     *
+     * @param inboundId 入库单id
+     * @return {@link Msg}
+     */
     @OperationLog(description = "删除入库单")
     @DeleteMapping("/deleteInbound")
     public Msg deleteInbound(@RequestParam("inboundId") int inboundId) {

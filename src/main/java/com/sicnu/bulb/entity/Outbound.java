@@ -50,12 +50,12 @@ public class Outbound {
 
     public Outbound(com.sicnu.bulb.entity.table.Outbound outbound) {
         this.id = outbound.getId();
-        this.orderId = outbound.getOrderId();
+//        this.orderId = outbound.getOrderId();
         this.outboundTime = outbound.getOutboundTime();
         this.principal = outbound.getPrincipal();
         this.intro = outbound.getIntro();
         this.warehouse = outbound.getWarehouse();
-        this.order = new Order(outbound.getOrder());
+//        this.order = new Order(outbound.getOrder());
     }
 
     public int getId() {
