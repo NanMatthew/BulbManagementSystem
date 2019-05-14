@@ -100,8 +100,9 @@ public class TestController {
         List<com.sicnu.bulb.entity.Outbound> outbounds = new ArrayList<>();
         for (Outbound outbound : outboundRepository.findAll()) {
             outbounds.add(new com.sicnu.bulb.entity.Outbound(outbound));
-
         }
         return outbounds;
     }
+
+
 }

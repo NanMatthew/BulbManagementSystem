@@ -3,8 +3,8 @@ Configuration:
   name: YAMLConfigTest
   properties: # 定义全局变量
     property:
-      name: filename
-      value: target/test-yaml.log
+      - name: log.path
+        value: /logs/bulb
   thresholdFilter:
     level: debug
   appenders:
@@ -22,7 +22,7 @@ Configuration:
     RollingFile:
     #打印出DEBUG级别日志，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档
     - name: RollingFileDebug
-      fileName: /logs/bulb/debug.log
+      fileName: ${log.path}/debug.log
       filePattern: "logs/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
         Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
@@ -37,7 +37,7 @@ Configuration:
           size: 512MB
     #处理INFO级别的日志，并把该日志放到tomcat根目录/bin/logs/bulb/info.log文件中
     - name: RollingFileInfo
-      fileName: /logs/bulb/info.log
+      fileName: ${log.path}/info.log
       filePattern: "logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
         Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
@@ -56,7 +56,7 @@ Configuration:
     #操作日志
     - name: operationLog
       ignoreExceptions: false
-      fileName: D:/logs/bulb/operation.log
+      fileName: ${log.path}/operation.log
       filePattern: "logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
         Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
@@ -74,7 +74,7 @@ Configuration:
     #登录日志
     - name: loginLog
       ignoreExceptions: false
-      fileName: D:/logs/bulb/login.log
+      fileName: ${log.path}/login.log
       filePattern: "logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
         Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
@@ -92,7 +92,7 @@ Configuration:
 
     #处理WARN级别的日志，并把该日志放到logs/warn.log文件中
     - name: RollingFileWarn
-      fileName: /logs/bulb/warn.log
+      fileName: ${log.path}/warn.log
       filePattern: "logs/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
         Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
@@ -107,7 +107,7 @@ Configuration:
           size: 512MB
     #处理error级别的日志，并把该日志放到logs/error.log文件中
     - name: RollingFileError
-      fileName: /logs/bulb/error.log
+      fileName: ${log.path}/error.log
       filePattern: "logs/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
         Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
@@ -118,7 +118,7 @@ Configuration:
           size: 512MB
     #druid的日志记录追加器
     - name: druidSqlRollingFile
-      fileName: /logs/bulb/druid-sql.log
+      fileName: ${log.path}/druid-sql.log
       filePattern: "logs/$${date:yyyy-MM}/api-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
         Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %L %M - %msg%xEx%n"

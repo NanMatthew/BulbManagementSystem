@@ -50,14 +50,23 @@ public class ShiroConfig {
         //注意：当前授权拦截后，shiro会自动跳转到未授权页面
         filterMap.put("/testSelect", "perms[selectTest]");
         filterMap.put("/testAdd", "perms[addTest]");
-        //获取所有产品
-        filterMap.put("/getAllProducts", "perms[getAllProducts]");
-        //获取入库流水账表
-        filterMap.put("/getInboundList", "perms[getInboundList]");
-        //获取订单列表
-        filterMap.put("/getOrderList", "perms[getOrderList]");
-        //获取出库单列表
-        filterMap.put("/getOutboundList", "perms[getOutboundList]");
+
+        //获取产品信息
+        filterMap.put("/getAllProducts", "perms[getProducts]");
+
+        //获取入库信息
+        filterMap.put("/getInboundList", "perms[getInbounds]");
+
+        //获取订单信息
+        filterMap.put("/getOrderList", "perms[getOrders]");
+
+        //获取出库信息
+        filterMap.put("/getOutboundList", "perms[getOutbounds]");
+
+        //获取库存信息
+        filterMap.put("/getStock", "perms[getStocks]");
+        filterMap.put("/getStockList", "perms[getStocks]");
+
         //管理员的增删改查功能 需要拥有系统管理员角色
         filterMap.put("/admin/*", "roles[sys]");
 

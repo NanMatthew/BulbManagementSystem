@@ -30,6 +30,10 @@ public class Stock {
     @Column(nullable = false)
     private int productId;
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "productId", insertable = false, updatable = false)
+    private Product product;
+
     /**
      * 电子库存
      */
@@ -67,6 +71,14 @@ public class Stock {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public String getIntro() {
