@@ -70,6 +70,7 @@ public class ShiroConfig {
         //获取库存信息
         filterMap.put("/getStock", "perms[getStocks]");
         filterMap.put("/getStockList", "perms[getStocks]");
+        filterMap.put("/getDangerStock", "perms[getStocks]");
 
         //管理员的增删改查功能 需要拥有系统管理员角色
         filterMap.put("/admin/*", "roles[sys]");
