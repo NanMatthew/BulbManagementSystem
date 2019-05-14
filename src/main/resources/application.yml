@@ -64,4 +64,4 @@ spring:
   resources:
     add-mappings: false  #不为静态文件建立映射
 logging:
-  config: classpath:selflog.yml
+  config: classpath:log4j2.yml
