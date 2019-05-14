@@ -1,15 +1,14 @@
 package com.sicnu.bulb.entity.table;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by HY
  * 2019/5/13 19:08
  */
 @SuppressWarnings("unused")
-@Entity
-@Table(name = "tb_order_products")
+//@Entity
+//@Table(name = "tb_order_products")
 public class OrderProducts {
 
     /**

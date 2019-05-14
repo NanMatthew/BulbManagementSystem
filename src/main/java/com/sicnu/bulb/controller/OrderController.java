@@ -17,31 +17,31 @@ import java.util.List;
  * <p>
  * 订单相关操作
  */
-@RestController
+//@RestController
 public class OrderController {
 
-    private final OrderRepository orderRepository;
-
-    @Autowired
-    public OrderController(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
+//    private final OrderRepository orderRepository;
+//
+//    @Autowired
+//    public OrderController(OrderRepository orderRepository) {
+//        this.orderRepository = orderRepository;
+//    }
 
     /**
      * 获取订单列表
      *
      * @return {@link Msg}
      */
-    @OperationLog(description = "获取订单列表")
-    @GetMapping("/getOrderList")
-    public Msg getOrderList() {
-        try {
-            List<Order> all = orderRepository.findAll();
-            return new OrderListMsg(all);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Msg.errorMsg(e.getMessage());
-        }
-    }
+//    @OperationLog(description = "获取订单列表")
+//    @GetMapping("/getOrderList")
+//    public Msg getOrderList() {
+//        try {
+//            List<Order> all = orderRepository.findAll();
+//            return new OrderListMsg(all);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return Msg.errorMsg(e.getMessage());
+//        }
+//    }
 
 }

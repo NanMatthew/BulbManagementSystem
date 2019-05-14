@@ -2,6 +2,7 @@ package com.sicnu.bulb.entity.table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sicnu.bulb.entity.Checkable;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ import java.util.Date;
 @Entity
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 @Table(name = "tb_outbound")
-public class Outbound {
+public class Outbound implements Checkable {
 
     /**
      * id
@@ -29,15 +30,31 @@ public class Outbound {
     private int id;
 
     /**
-     * 订单id
+     * 厂商
      */
-    @Column(nullable = false)
-    private int orderId;
+    private String customer;
+
+    private int productId;
+
+    @OneToOne
+    @JoinColumn(name = "productId", insertable = false, updatable = false)
+    private Product product;
+
+    /**
+     * 出库数量
+     */
+    private long outboundNum;
+
+//    /**
+//     * 订单id
+//     */
+//    @Column(nullable = false)
+//    private int orderId;
 
     //insertable=false,updatable=false  要求要加
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "orderId", insertable = false, updatable = false)
-    private Order order;
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "orderId", insertable = false, updatable = false)
+//    private Order order;
 
     /**
      * 出库时间
@@ -66,6 +83,13 @@ public class Outbound {
     private String intro;
 
     public Outbound() {
+
+    }
+
+    @Override
+    public boolean checkInvalid() {
+        return productId != 0 && outboundNum != 0 && outboundTime != null
+                && customer != null && warehouse != null && principal != null;
     }
 
     public int getId() {
@@ -76,21 +100,53 @@ public class Outbound {
         this.id = id;
     }
 
-    public Order getOrder() {
-        return order;
+    public String getCustomer() {
+        return customer;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public long getOutboundNum() {
+        return outboundNum;
+    }
+
+    public void setOutboundNum(long outboundNum) {
+        this.outboundNum = outboundNum;
+    }
+
+    //    public Order getOrder() {
+//        return order;
+//    }
+//
+//    public void setOrder(Order order) {
+//        this.order = order;
+//    }
+//
+//    public int getOrderId() {
+//        return orderId;
+//    }
+//
+//    public void setOrderId(int orderId) {
+//        this.orderId = orderId;
+//    }
 
     public Date getOutboundTime() {
         return outboundTime;
@@ -123,6 +179,4 @@ public class Outbound {
     public void setPrincipal(String principal) {
         this.principal = principal;
     }
-
-
 }

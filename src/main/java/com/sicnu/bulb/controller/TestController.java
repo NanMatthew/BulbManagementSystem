@@ -35,14 +35,12 @@ public class TestController {
 
     private final StockRepository stockRepository;
     private final InboundListRepository inboundListRepository;
-    private final OrderRepository orderRepository;
     private final OutboundRepository outboundRepository;
 
     @Autowired
-    public TestController(StockRepository stockRepository, InboundListRepository inboundListRepository, OrderRepository orderRepository, OutboundRepository outboundRepository) {
+    public TestController(StockRepository stockRepository, InboundListRepository inboundListRepository, OutboundRepository outboundRepository) {
         this.stockRepository = stockRepository;
         this.inboundListRepository = inboundListRepository;
-        this.orderRepository = orderRepository;
         this.outboundRepository = outboundRepository;
     }
 
@@ -93,15 +91,15 @@ public class TestController {
         return inboundListRepository.findAll();
     }
 
-    @RequestMapping("/test/testOrderList")
-    public List<com.sicnu.bulb.entity.Order> testOrderList() {
-        List<Order> all = orderRepository.findAll();
-        List<com.sicnu.bulb.entity.Order> orderList = new ArrayList<>();
-        for (Order order : all) {
-            orderList.add(new com.sicnu.bulb.entity.Order(order));
-        }
-        return orderList;
-    }
+//    @RequestMapping("/test/testOrderList")
+//    public List<com.sicnu.bulb.entity.Order> testOrderList() {
+//        List<Order> all = orderRepository.findAll();
+//        List<com.sicnu.bulb.entity.Order> orderList = new ArrayList<>();
+//        for (Order order : all) {
+//            orderList.add(new com.sicnu.bulb.entity.Order(order));
+//        }
+//        return orderList;
+//    }
 
     @OperationLog(description = "测试")
     @RequestMapping("/test/testOutboundList")

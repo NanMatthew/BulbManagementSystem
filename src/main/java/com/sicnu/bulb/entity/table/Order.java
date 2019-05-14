@@ -14,8 +14,8 @@ import java.util.List;
  * 订单表
  */
 @SuppressWarnings("unused")
-@Entity
-@Table(name = "tb_order")
+//@Entity
+//@Table(name = "tb_order")
 public class Order {
 
     /**
