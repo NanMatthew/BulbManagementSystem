@@ -1,6 +1,7 @@
 package com.sicnu.bulb.entity.table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sicnu.bulb.entity.Checkable;
 import com.sicnu.bulb.entity.table.security.Role;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Entity
 @Table(name = "tb_admin")
-public class Admin {
+public class Admin implements Checkable {
 
     public static final String ADMIN_TYPE_SYS = "系统管理员";
 
@@ -80,6 +81,7 @@ public class Admin {
      * <p>
      * 针对AdminController传入的admin对象
      */
+    @Override
     public boolean checkInvalid() {
         return username != null && password != null
                 && name != null && phoneNumber != null;

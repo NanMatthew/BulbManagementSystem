@@ -4,6 +4,7 @@ import com.sicnu.bulb.entity.msg.Msg;
 import com.sicnu.bulb.entity.msg.StockListMsg;
 import com.sicnu.bulb.entity.msg.StockMsg;
 import com.sicnu.bulb.repository.StockRepository;
+import com.sicnu.bulb.selflog.OperationLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,7 @@ public class StockController {
      *
      * @return {@link Msg}
      */
+    @OperationLog(description = "获取所有商品的库存信息")
     @GetMapping("/getStockList")
     public Msg getStockList() {
         try {

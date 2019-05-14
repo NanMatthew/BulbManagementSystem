@@ -12,34 +12,35 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class ProductListMsg extends Msg {
 
-    private List<mProduct> products;
+    private List<Product> products;
 
     public ProductListMsg(List<Product> productList) {
         super(ResultCode.RESULT_CODE_CORRECT);
-        products = new ArrayList<>();
-        for (Product product : productList) {
-            //第一次
-            if (products.size() == 0) {
-                products.add(new mProduct(product));
-                continue;
-            }
-
-            //当前最后一个大类
-            mProduct mProduct = products.get(products.size() - 1);
-            //是否是此大类
-            if (mProduct.name.equals(product.getName())) {
-                mProduct.add(product);
-            } else {
-                products.add(new mProduct(product));
-            }
-        }
+        this.products = productList;
+//        products = new ArrayList<>();
+//        for (Product product : productList) {
+//            //第一次
+//            if (products.size() == 0) {
+//                products.add(new mProduct(product));
+//                continue;
+//            }
+//
+//            //当前最后一个大类
+//            mProduct mProduct = products.get(products.size() - 1);
+//            //是否是此大类
+//            if (mProduct.name.equals(product.getName())) {
+//                mProduct.add(product);
+//            } else {
+//                products.add(new mProduct(product));
+//            }
+//        }
     }
 
-    public List<mProduct> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<mProduct> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 

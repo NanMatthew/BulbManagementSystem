@@ -74,6 +74,10 @@ public class ShiroConfig {
         //管理员的增删改查功能 需要拥有系统管理员角色
         filterMap.put("/admin/*", "roles[sys]");
 
+        //添加删除入库单 需要拥有仓库管理员角色
+        filterMap.put("/addInbound", "roles[warehouse]");
+        filterMap.put("/deleteInbound", "roles[warehouse]");
+
         //必须认证（登录）
         filterMap.put("/*", "authc");
 

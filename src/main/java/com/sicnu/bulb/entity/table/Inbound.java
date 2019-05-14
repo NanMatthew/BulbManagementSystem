@@ -1,6 +1,7 @@
 package com.sicnu.bulb.entity.table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sicnu.bulb.entity.Checkable;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ import java.util.Date;
 @SuppressWarnings("unused")
 @Entity
 @Table(name = "tb_inbound")
-public class Inbound {
+public class Inbound implements Checkable {
 
     /**
      * id
@@ -74,6 +75,12 @@ public class Inbound {
     private String intro;
 
     public Inbound() {
+    }
+
+    @Override
+    public boolean checkInvalid() {
+        return productId != 0 && inboundTime != null
+                && count != 0 && workshop != null && principal != null;
     }
 
     public int getId() {
