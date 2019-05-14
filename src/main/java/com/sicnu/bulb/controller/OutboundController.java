@@ -4,7 +4,9 @@ import com.sicnu.bulb.entity.msg.Msg;
 import com.sicnu.bulb.entity.msg.OutboundListMsg;
 import com.sicnu.bulb.entity.msg.OutboundMsg;
 import com.sicnu.bulb.entity.table.Outbound;
+import com.sicnu.bulb.entity.table.Product;
 import com.sicnu.bulb.repository.OutboundRepository;
+import com.sicnu.bulb.repository.ProductRepository;
 import com.sicnu.bulb.repository.StockRepository;
 import com.sicnu.bulb.selflog.OperationLog;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,13 @@ public class OutboundController {
 
     private final OutboundRepository outboundRepository;
     private final StockRepository stockRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public OutboundController(OutboundRepository outboundRepository, StockRepository stockRepository) {
+    public OutboundController(OutboundRepository outboundRepository, StockRepository stockRepository, ProductRepository productRepository) {
         this.outboundRepository = outboundRepository;
         this.stockRepository = stockRepository;
+        this.productRepository = productRepository;
     }
 
     /**
@@ -60,6 +64,9 @@ public class OutboundController {
                 return Msg.errorMsg("表单填写有误");
             }
             Outbound save = outboundRepository.save(outbound);
+            Optional<Product> byId = productRepository.findById(save.getProductId());
+            //noinspection OptionalGetWithoutIsPresent
+            save.setProduct(byId.get());
             stockRepository.updateStock(save.getProductId(), -save.getOutboundNum());
             return new OutboundMsg(save);
         } catch (Exception e) {

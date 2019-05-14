@@ -30,7 +30,7 @@ public class Stock {
     @Column(nullable = false)
     private int productId;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "productId", insertable = false, updatable = false)
     private Product product;
 
