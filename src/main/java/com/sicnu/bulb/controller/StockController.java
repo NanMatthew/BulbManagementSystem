@@ -27,6 +27,8 @@ public class StockController {
 
     /**
      * 获取所有商品的库存信息
+     *
+     * @return {@link Msg}
      */
     @GetMapping("/getStockList")
     public Msg getStockList() {
@@ -41,7 +43,9 @@ public class StockController {
 
     /**
      * 获取产品信息及库存
+     *
      * @param productId 产品Id
+     * @return {@link Msg}
      */
     @GetMapping("/getStock")
     public Msg getStockById(@RequestParam("productId") int productId) {

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by HY
  * 2019/5/13 21:26
+ * <p>
+ * 出库相关操作
  */
 @RestController
 public class OutboundController {
@@ -24,6 +26,8 @@ public class OutboundController {
 
     /**
      * 获取出库单列表
+     *
+     * @return {@link Msg}
      */
     @GetMapping("/getOutboundList")
     public Msg getOutboundList() {

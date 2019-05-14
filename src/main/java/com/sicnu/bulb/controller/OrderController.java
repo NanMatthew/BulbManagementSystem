@@ -13,6 +13,8 @@ import java.util.List;
 /**
  * Created by HY
  * 2019/5/13 20:08
+ * <p>
+ * 订单相关操作
  */
 @RestController
 public class OrderController {
@@ -26,9 +28,11 @@ public class OrderController {
 
     /**
      * 获取订单列表
+     *
+     * @return {@link Msg}
      */
     @GetMapping("/getOrderList")
-    public Msg getOrderList(){
+    public Msg getOrderList() {
         try {
             List<Order> all = orderRepository.findAll();
             return new OrderListMsg(all);

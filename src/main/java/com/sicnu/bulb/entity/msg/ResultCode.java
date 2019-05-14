@@ -1,7 +1,6 @@
 package com.sicnu.bulb.entity.msg;
 
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,6 +83,15 @@ public class ResultCode {
 
     static {
         resultMap.put(RESULT_CODE_NO_PERMISSION, "未授权");
+    }
+
+    /**
+     * 产品不存在
+     */
+    public static final int RESULT_CODE_PRODUCT_NOT_EXIST = -105;
+
+    static {
+        resultMap.put(RESULT_CODE_PRODUCT_NOT_EXIST, "产品不存在");
     }
 
     /**

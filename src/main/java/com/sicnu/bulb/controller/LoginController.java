@@ -43,7 +43,7 @@ public class LoginController {
      *
      * @param username 用户名
      * @param password 密码
-     * @return Msg
+     * @return {@link Msg}
      */
     @PostMapping("/login")
     public Msg Login(@RequestParam("username") String username,
@@ -78,6 +78,8 @@ public class LoginController {
 
     /**
      * 退出登录
+     *
+     * @return {@link Msg}
      */
     @RequestMapping("/logout")
     public Msg logout(HttpServletRequest servletRequest) {
@@ -95,7 +97,7 @@ public class LoginController {
 
 
     //打印登录日志
-    private void logLogin(Admin admin,String ip){
+    private void logLogin(Admin admin, String ip) {
         StringBuilder s = new StringBuilder(" 0 - 登录操作 - ");
 
         s.append(ip).append(" - ");
@@ -104,7 +106,7 @@ public class LoginController {
         getLogger().info(s.toString());
     }
 
-    private void LogLogout(String ip){
+    private void LogLogout(String ip) {
         StringBuilder s = new StringBuilder(" 1 - 退出登录操作 - ");
 
         s.append(ip).append(" - ");
