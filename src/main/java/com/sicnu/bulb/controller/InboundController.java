@@ -13,6 +13,8 @@ import java.util.List;
 /**
  * Created by HY
  * 2019/5/13 17:15
+ * <p>
+ * 入库相关操作
  */
 @RestController
 public class InboundController {
@@ -26,6 +28,8 @@ public class InboundController {
 
     /**
      * 获取入库流水账表
+     *
+     * @return {@link Msg}
      */
     @GetMapping("/getInboundList")
     public Msg getInboundList() {

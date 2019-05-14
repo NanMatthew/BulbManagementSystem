@@ -1,5 +1,6 @@
 package com.sicnu.bulb.controller;
 
+import com.sicnu.bulb.entity.LoginLog;
 import com.sicnu.bulb.entity.table.Admin;
 import com.sicnu.bulb.entity.table.Order;
 import com.sicnu.bulb.entity.table.Outbound;
@@ -11,6 +12,7 @@ import com.sicnu.bulb.repository.InboundListRepository;
 import com.sicnu.bulb.repository.OrderRepository;
 import com.sicnu.bulb.repository.OutboundRepository;
 import com.sicnu.bulb.repository.StockRepository;
+import com.sicnu.bulb.util.GsonUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ import java.util.List;
 /**
  * Created by HY
  * 2019/4/3 22:01
+ * <p>
+ * 测试接口
  */
 @RestController
 public class TestController {
@@ -56,9 +60,14 @@ public class TestController {
         return "";
     }
 
-    @RequestMapping("/testSelect")
-    public String testSelect() {
-        return "testSelect";
+    @RequestMapping("/test/LoginLog")
+    public LoginLog testSelect() {
+        LoginLog log = new LoginLog("2", new Admin());
+        log.setOperationType(0);
+        log.setIntro("登录操作");
+        log.setIntro("退出登录操作");
+        System.out.println("LoginLog=====" + GsonUtil.getInstance().toJson(log));
+        return log;
     }
 
     @RequestMapping("/testAdd")

@@ -8,12 +8,18 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Created by HY
  * 2019/4/17 20:12
+ * <p>
+ * 自定义Shiro拦截请求时返回的{@link Msg}
+ *
+ * @see Msg
  */
 @RestController
 public class ShiroController {
 
     /**
      * 未登录就请求其他url
+     *
+     * @return {@link Msg}
      */
     @RequestMapping("/needLogin")
     public Msg needLogin() {
@@ -22,6 +28,8 @@ public class ShiroController {
 
     /**
      * 未授权
+     *
+     * @return {@link Msg}
      */
     @RequestMapping("/noAuth")
     public Msg noAuth() {

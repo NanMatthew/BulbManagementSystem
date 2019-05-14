@@ -1,6 +1,8 @@
 package com.sicnu.bulb.selflog;
 
+import com.sicnu.bulb.util.GsonUtil;
 import com.sicnu.bulb.util.IpUtil;
+import com.sicnu.bulb.util.LoggerUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,7 +21,7 @@ import java.lang.reflect.Method;
 @Component
 public class OperationLogAspect {
 
-    private static final Logger logger = LoggerFactory.getLogger("operation");
+    private static final Logger logger = LoggerUtil.getOperationLogger();
 
     @Pointcut("@annotation(com.sicnu.bulb.selflog.OperationLog)")
     public void controllerAspect() {
@@ -29,21 +31,26 @@ public class OperationLogAspect {
     public void doAfter(JoinPoint joinPoint) {
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        StringBuilder operationLog = new StringBuilder();
-        String ip = IpUtil.getIpAddress(request);
         try {
             System.out.println("==============拦截到请求==============");
+            com.sicnu.bulb.entity.OperationLog log = new com.sicnu.bulb.entity.OperationLog();
 
+            String ip = IpUtil.getIpAddress(request);
             System.out.println("请求ip：" + ip);
-            operationLog.append(" - ").append(ip);
+            log.setRequestIp(ip);
 
-            String requestMethod = joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName();
-            System.out.println("请求方法" + requestMethod);
-            operationLog.append(" - ").append(requestMethod);
+
+            String requestController = joinPoint.getTarget().getClass().getName();
+            String requestMethod = joinPoint.getSignature().getName();
+//            String requestMethod = joinPoint.getTarget().getClass().getName();
+            System.out.println("请求方法" + requestController + "." + requestMethod);
+            log.setRequestController(requestController);
+            log.setRequestMethod(requestMethod);
 
             String methodDescription = getControllerMethodDescription(joinPoint);
             System.out.println("方法描述：" + methodDescription);
-            operationLog.append(" - ").append(methodDescription);
+            log.setMethodDescription(methodDescription);
+
 //            Object[] args = joinPoint.getArgs();
 //            String param;
 //            for (int i = 0; i < args.length; i++) {
@@ -52,7 +59,7 @@ public class OperationLogAspect {
 //                operationLog.append(param);
 //            }
 
-            logger.info(operationLog.toString());
+            logger.info(GsonUtil.getInstance().toJson(log));
         } catch (Exception e) {
             //记录本地异常日志
             logger.error("==拦截到请求但发生异常==");

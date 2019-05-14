@@ -68,6 +68,13 @@ public class Admin {
     public Admin() {
     }
 
+    public Admin(String username, String password, String name, String phoneNumber) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+    }
+
     /**
      * 对象是否合法
      * <p>

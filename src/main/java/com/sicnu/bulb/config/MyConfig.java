@@ -12,6 +12,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MyConfig {
 
+    /**
+     * 屏蔽Jackson null转换报的错
+     * <p>
+     * 默认情况下Jackson 转换时 为空时报错
+     */
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper().disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);

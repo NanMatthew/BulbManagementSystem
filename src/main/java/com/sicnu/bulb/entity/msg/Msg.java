@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 2019/4/3 19:31
  * <p>
  * 返回的消息 基类
+ *
+ * @see ResultCode
  */
 @SuppressWarnings("unused")
 public class Msg {
@@ -38,7 +40,7 @@ public class Msg {
     }
 
     /**
-     * 通过resultCode自动补全info信息
+     * 通过{@link ResultCode}自动补全info信息
      *
      * @param resultCode resultCode
      */
@@ -68,7 +70,7 @@ public class Msg {
      * 生成错误的Msg对象
      *
      * @param info info
-     * @return Msg
+     * @return {@link Msg}
      */
     public static Msg errorMsg(String info) {
         return new Msg(ResultCode.RESULT_CODE_ERROR, info);
@@ -88,6 +90,7 @@ public class Msg {
         return resultCode;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public void setResultCode(int resultCode) {
         this.resultCode = resultCode;
     }

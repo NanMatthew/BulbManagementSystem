@@ -53,6 +53,7 @@ public class ShiroConfig {
 
         //获取产品信息
         filterMap.put("/getAllProducts", "perms[getProducts]");
+        filterMap.put("/getProductInfo", "perms[getProducts]");
 
         //获取入库信息
         filterMap.put("/getInboundList", "perms[getInbounds]");
@@ -62,6 +63,9 @@ public class ShiroConfig {
 
         //获取出库信息
         filterMap.put("/getOutboundList", "perms[getOutbounds]");
+
+        //获取日志信息
+        filterMap.put("/log/*", "perms[getLogs]");
 
         //获取库存信息
         filterMap.put("/getStock", "perms[getStocks]");
