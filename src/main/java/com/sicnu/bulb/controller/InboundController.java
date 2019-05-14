@@ -4,6 +4,7 @@ import com.sicnu.bulb.entity.msg.InboundListMsg;
 import com.sicnu.bulb.entity.msg.Msg;
 import com.sicnu.bulb.entity.view.InboundList;
 import com.sicnu.bulb.repository.InboundListRepository;
+import com.sicnu.bulb.selflog.OperationLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ public class InboundController {
      *
      * @return {@link Msg}
      */
+    @OperationLog(description = "获取入库流水账表")
     @GetMapping("/getInboundList")
     public Msg getInboundList() {
         try {

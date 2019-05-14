@@ -3,6 +3,7 @@ package com.sicnu.bulb.controller;
 import com.sicnu.bulb.entity.msg.Msg;
 import com.sicnu.bulb.entity.msg.OutboundListMsg;
 import com.sicnu.bulb.repository.OutboundRepository;
+import com.sicnu.bulb.selflog.OperationLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,7 @@ public class OutboundController {
      *
      * @return {@link Msg}
      */
+    @OperationLog(description = "获取出库单列表")
     @GetMapping("/getOutboundList")
     public Msg getOutboundList() {
         try {

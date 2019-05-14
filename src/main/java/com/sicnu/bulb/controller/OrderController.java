@@ -4,6 +4,7 @@ import com.sicnu.bulb.entity.msg.Msg;
 import com.sicnu.bulb.entity.msg.OrderListMsg;
 import com.sicnu.bulb.entity.table.Order;
 import com.sicnu.bulb.repository.OrderRepository;
+import com.sicnu.bulb.selflog.OperationLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ public class OrderController {
      *
      * @return {@link Msg}
      */
+    @OperationLog(description = "获取订单列表")
     @GetMapping("/getOrderList")
     public Msg getOrderList() {
         try {

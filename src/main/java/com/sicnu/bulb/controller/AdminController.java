@@ -6,6 +6,7 @@ import com.sicnu.bulb.entity.table.Admin;
 import com.sicnu.bulb.entity.table.security.AdminRole;
 import com.sicnu.bulb.repository.AdminRepository;
 import com.sicnu.bulb.repository.AdminRoleRepository;
+import com.sicnu.bulb.selflog.OperationLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,7 @@ public class AdminController {
      *
      * @return {@link Msg}
      */
+    @OperationLog(description = "获取所有管理员信息")
     @GetMapping("/admin/findAll")
     public Msg findAllAdministrator() {
         try {
@@ -54,6 +56,7 @@ public class AdminController {
      * @return {@link Msg}
      * @see Admin
      */
+    @OperationLog(description = "添加管理员")
     @PostMapping("/admin/add")
     public Msg addAdministrator(Admin admin, @RequestParam("adminType") int adminType) {
 
@@ -88,6 +91,7 @@ public class AdminController {
      *
      * @return {@link Msg}
      */
+    @OperationLog(description = "删除管理员")
     @DeleteMapping("/admin/delete")
     public Msg deleteAdmin(@RequestParam("username") String username) {
         try {

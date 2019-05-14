@@ -6,6 +6,7 @@ import com.sicnu.bulb.entity.msg.ProductListMsg;
 import com.sicnu.bulb.entity.msg.ResultCode;
 import com.sicnu.bulb.entity.table.Product;
 import com.sicnu.bulb.repository.ProductRepository;
+import com.sicnu.bulb.selflog.OperationLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,7 @@ public class ProductController {
      *
      * @return {@link Msg}
      */
+    @OperationLog(description = "获取所有产品列表")
     @RequestMapping("/getAllProducts")
     public Msg getAllProducts() {
         try {
@@ -53,6 +55,7 @@ public class ProductController {
      * @param productId 产品id
      * @return {@link Msg}
      */
+    @OperationLog(description = "获取单个产品信息")
     @GetMapping("/getProductInfo")
     public Msg getProductInfo(@RequestParam("productId") int productId) {
         try {

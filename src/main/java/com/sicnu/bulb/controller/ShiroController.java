@@ -2,6 +2,7 @@ package com.sicnu.bulb.controller;
 
 import com.sicnu.bulb.entity.msg.Msg;
 import com.sicnu.bulb.entity.msg.ResultCode;
+import com.sicnu.bulb.selflog.OperationLog;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,7 @@ public class ShiroController {
      *
      * @return {@link Msg}
      */
+//    @OperationLog(description = "非法操作--未登录就请求其他url")
     @RequestMapping("/needLogin")
     public Msg needLogin() {
         return new Msg(ResultCode.RESULT_CODE_NEED_LOGIN);
@@ -31,6 +33,7 @@ public class ShiroController {
      *
      * @return {@link Msg}
      */
+//    @OperationLog(description = "非法操作--未授权")
     @RequestMapping("/noAuth")
     public Msg noAuth() {
         return new Msg(ResultCode.RESULT_CODE_NO_PERMISSION);

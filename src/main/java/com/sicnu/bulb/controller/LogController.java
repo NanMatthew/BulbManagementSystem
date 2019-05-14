@@ -49,6 +49,7 @@ public class LogController {
      *
      * @return {@link Msg}
      */
+    @com.sicnu.bulb.selflog.OperationLog(description = "获取操作日志")
     @GetMapping("/log/operationLogs")
     public Msg getOperationLogs() {
         return readOperationLogs();
@@ -59,6 +60,7 @@ public class LogController {
      *
      * @return {@link Msg}
      */
+    @com.sicnu.bulb.selflog.OperationLog(description = "获取登录日志")
     @GetMapping("/log/loginLogs")
     public Msg getLoginLogs() {
         return readLoginLogs();
