@@ -10,11 +10,11 @@ import java.util.List;
  * 2019/5/12 21:53
  */
 @SuppressWarnings("unused")
-public class ProductsMsg extends Msg {
+public class ProductListMsg extends Msg {
 
     private List<mProduct> products;
 
-    public ProductsMsg(List<Product> productList) {
+    public ProductListMsg(List<Product> productList) {
         super(ResultCode.RESULT_CODE_CORRECT);
         products = new ArrayList<>();
         for (Product product : productList) {
@@ -46,7 +46,7 @@ public class ProductsMsg extends Msg {
     /**
      * 内部类
      * 集合同一种类型但规格不同的产品
-     * 对应上述 @{@link #ProductsMsg(List)} 注释中的 大类
+     * 对应上述 @{@link #ProductListMsg(List)} 注释中的 大类
      * <p>
      * 如 灯泡 15W 和 灯泡45W
      * 则{@code name}为灯泡，{@code productList}为具体产品集合

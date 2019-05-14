@@ -1,19 +1,18 @@
 package com.sicnu.bulb.controller;
 
+import com.sicnu.bulb.entity.LoginLog;
 import com.sicnu.bulb.entity.msg.LoginMsg;
 import com.sicnu.bulb.entity.msg.Msg;
 import com.sicnu.bulb.entity.msg.ResultCode;
 import com.sicnu.bulb.entity.table.Admin;
-import com.sicnu.bulb.repository.AdminRepository;
+import com.sicnu.bulb.util.GsonUtil;
 import com.sicnu.bulb.util.IpUtil;
+import com.sicnu.bulb.util.LoggerUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,12 +30,10 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class LoginController {
 
-    private final AdminRepository adminRepository;
-
-    @Autowired
-    public LoginController(AdminRepository adminRepository) {
-        this.adminRepository = adminRepository;
-    }
+    //登录操作
+    private static final int LOGIN_TYPE = 0;
+    //退出登录操作
+    private static final int LOGOUT_TYPE = 1;
 
     /**
      * 登录
@@ -71,8 +68,7 @@ public class LoginController {
         }
         Admin admin = (Admin) subject.getPrincipals().getPrimaryPrincipal();
 
-        logLogin(admin, IpUtil.getIpAddress(servletRequest));
-
+        doLog(admin, IpUtil.getIpAddress(servletRequest), LOGIN_TYPE);
         return new LoginMsg(admin.getRoleList().get(0).getRoleId());
     }
 
@@ -84,34 +80,24 @@ public class LoginController {
     @RequestMapping("/logout")
     public Msg logout(HttpServletRequest servletRequest) {
         Subject subject = SecurityUtils.getSubject();
+        Admin admin = (Admin) subject.getPrincipals().getPrimaryPrincipal();
+        doLog(admin, IpUtil.getIpAddress(servletRequest), LOGOUT_TYPE);
         subject.logout();
-
-        LogLogout(IpUtil.getIpAddress(servletRequest));
-
         return new Msg("退出登录成功");
     }
 
-    private Logger getLogger() {
-        return LoggerFactory.getLogger("login");
-    }
+    //写入日志文件
+    private void doLog(Admin admin, String ip, int operationType) {
 
-
-    //打印登录日志
-    private void logLogin(Admin admin, String ip) {
-        StringBuilder s = new StringBuilder(" 0 - 登录操作 - ");
-
-        s.append(ip).append(" - ");
-        s.append(admin.getName()).append(" - ");
-
-        getLogger().info(s.toString());
-    }
-
-    private void LogLogout(String ip) {
-        StringBuilder s = new StringBuilder(" 1 - 退出登录操作 - ");
-
-        s.append(ip).append(" - ");
-
-        getLogger().info(s.toString());
+        LoginLog log = new LoginLog(ip, admin);
+        log.setOperationType(operationType);
+        if (operationType == LOGIN_TYPE) {
+            log.setIntro("登录操作");
+        } else {
+            log.setIntro("退出登录操作");
+        }
+//        System.out.println("LoginLog=====" + GsonUtil.getInstance().toJson(log));
+        LoggerUtil.getLoginLogger().info(GsonUtil.getInstance().toJson(log));
     }
 
 }

@@ -2,7 +2,7 @@ package com.sicnu.bulb.controller;
 
 import com.sicnu.bulb.entity.msg.Msg;
 import com.sicnu.bulb.entity.msg.ProductMsg;
-import com.sicnu.bulb.entity.msg.ProductsMsg;
+import com.sicnu.bulb.entity.msg.ProductListMsg;
 import com.sicnu.bulb.entity.msg.ResultCode;
 import com.sicnu.bulb.entity.table.Product;
 import com.sicnu.bulb.repository.ProductRepository;
@@ -40,7 +40,7 @@ public class ProductController {
     public Msg getAllProducts() {
         try {
             List<Product> products = productRepository.findAll();
-            return new ProductsMsg(products);
+            return new ProductListMsg(products);
         } catch (Exception e) {
             e.printStackTrace();
             return Msg.errorMsg(e.getMessage());

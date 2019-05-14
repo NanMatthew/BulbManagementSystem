@@ -58,6 +58,9 @@ public class AdminController {
     public Msg addAdministrator(Admin admin, @RequestParam("adminType") int adminType) {
 
         if (admin.checkInvalid()) {
+            if (adminRepository.findByUsername(admin.getUsername()) != null) {
+                return Msg.errorMsg("该用户已存在！");
+            }
             try {
                 switch (adminType) {
                     case 1: //系统管理员

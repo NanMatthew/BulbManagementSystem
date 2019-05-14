@@ -64,6 +64,9 @@ public class ShiroConfig {
         //获取出库信息
         filterMap.put("/getOutboundList", "perms[getOutbounds]");
 
+        //获取日志信息
+        filterMap.put("/log/*", "perms[getLogs]");
+
         //获取库存信息
         filterMap.put("/getStock", "perms[getStocks]");
         filterMap.put("/getStockList", "perms[getStocks]");

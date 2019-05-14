@@ -59,7 +59,7 @@ Configuration:
       fileName: ${log.path}/operation.log
       filePattern: "logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
-        Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
+        Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M && %msg%xEx%n"
       Filters:
         #只接受INFO级别的日志，其余的全部拒绝处理
         ThresholdFilter:
@@ -77,7 +77,7 @@ Configuration:
       fileName: ${log.path}/login.log
       filePattern: "logs/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz"
       PatternLayout:
-        Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M - %msg%xEx%n"
+        Pattern: "[%d{yyyy-MM-dd HH:mm:ss}] %-5level %class{36} %L %M && %msg%xEx%n"
       Filters:
         #只接受INFO级别的日志，其余的全部拒绝处理
         ThresholdFilter:
