@@ -1,13 +1,17 @@
 package com.sicnu.bulb.controller;
 
 import com.google.gson.JsonSyntaxException;
-import com.sicnu.bulb.entity.LoginLog;
-import com.sicnu.bulb.entity.OperationLog;
+import com.sicnu.bulb.entity.table.LoginLog;
+import com.sicnu.bulb.entity.table.OperationLog;
 import com.sicnu.bulb.entity.msg.LogMsg;
 import com.sicnu.bulb.entity.msg.Msg;
+import com.sicnu.bulb.repository.LoginLogRepository;
+import com.sicnu.bulb.repository.OperationLogRepository;
 import com.sicnu.bulb.util.FileUtil;
 import com.sicnu.bulb.util.GsonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
@@ -44,6 +48,15 @@ public class LogController {
     private static final String LOGIN_LOG = FILE_PATH + "login.log";
 
 
+    private final LoginLogRepository loginLogRepository;
+    private final OperationLogRepository operationLogRepository;
+
+    @Autowired
+    public LogController(LoginLogRepository loginLogRepository, OperationLogRepository operationLogRepository) {
+        this.loginLogRepository = loginLogRepository;
+        this.operationLogRepository = operationLogRepository;
+    }
+
     /**
      * 获取操作日志
      *
@@ -52,7 +65,20 @@ public class LogController {
     @com.sicnu.bulb.selflog.OperationLog(description = "获取操作日志")
     @GetMapping("/log/operationLogs")
     public Msg getOperationLogs() {
-        return readOperationLogs();
+        return new LogMsg<>(operationLogRepository.findAll());
+    }
+
+    /**
+     * 获取操作日志(分页)
+     *
+     * @return {@link Msg}
+     */
+    @com.sicnu.bulb.selflog.OperationLog(description = "获取登录日志(分页)")
+    @GetMapping("/log/operationLogsPage")
+    public Msg getOperationLogsPage(@RequestParam("currentPage") int currentPage,
+                                    @RequestParam("prePageNum") int prePageNum) {
+
+        return getMsg(currentPage, prePageNum, OPERATION_LOG);
     }
 
     /**
@@ -63,8 +89,51 @@ public class LogController {
     @com.sicnu.bulb.selflog.OperationLog(description = "获取登录日志")
     @GetMapping("/log/loginLogs")
     public Msg getLoginLogs() {
-        return readLoginLogs();
+        return new LogMsg<>(loginLogRepository.findAll());
     }
+
+    /**
+     * 获取登录日志(分页)
+     *
+     * @return {@link Msg}
+     */
+    @com.sicnu.bulb.selflog.OperationLog(description = "获取登录日志(分页)")
+    @GetMapping("/log/loginLogsPage")
+    public Msg getLoginLogsPage(@RequestParam("currentPage") int currentPage,
+                                @RequestParam("prePageNum") int prePageNum) {
+
+        return getMsg(currentPage, prePageNum, LOGIN_LOG);
+    }
+
+
+    private Msg getMsg(int currentPage, int prePageNum, String loginLog) {
+
+        int totalNum;
+        if (loginLog.equals(LOGIN_LOG)) {
+            totalNum = loginLogRepository.queryTotalNum();
+        } else {
+            totalNum = operationLogRepository.queryTotalNum();
+        }
+
+        //总页数
+        int totalPage = totalNum / prePageNum;
+        if (totalPage * prePageNum < totalNum) {
+            totalPage++;
+        }
+
+        //开始数
+        int start = (currentPage - 1) * prePageNum;
+
+        if (loginLog.equals(LOGIN_LOG)) {
+            List<LoginLog> currentPageLogs = loginLogRepository.getCurrentPageLogs(start, prePageNum);
+            return new LogMsg<>(currentPageLogs, currentPage, totalPage);
+        } else {
+            List<OperationLog> currentPageLogs = operationLogRepository.getCurrentPageLogs(start, prePageNum);
+            return new LogMsg<>(currentPageLogs, currentPage, totalPage);
+        }
+
+    }
+
 
     /**
      * 读取操作日志并返回

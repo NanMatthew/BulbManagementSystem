@@ -1,15 +1,13 @@
 package com.sicnu.bulb.controller;
 
-import com.sicnu.bulb.entity.LoginLog;
+import com.sicnu.bulb.entity.table.LoginLog;
 import com.sicnu.bulb.entity.table.Admin;
-import com.sicnu.bulb.entity.table.Order;
 import com.sicnu.bulb.entity.table.Outbound;
 import com.sicnu.bulb.entity.table.Stock;
 import com.sicnu.bulb.entity.table.security.Permission;
 import com.sicnu.bulb.entity.view.InboundList;
 import com.sicnu.bulb.selflog.OperationLog;
 import com.sicnu.bulb.repository.InboundListRepository;
-import com.sicnu.bulb.repository.OrderRepository;
 import com.sicnu.bulb.repository.OutboundRepository;
 import com.sicnu.bulb.repository.StockRepository;
 import com.sicnu.bulb.util.GsonUtil;

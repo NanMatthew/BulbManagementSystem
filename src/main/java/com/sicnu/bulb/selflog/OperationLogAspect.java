@@ -1,5 +1,6 @@
 package com.sicnu.bulb.selflog;
 
+import com.sicnu.bulb.repository.OperationLogRepository;
 import com.sicnu.bulb.util.GsonUtil;
 import com.sicnu.bulb.util.IpUtil;
 import com.sicnu.bulb.util.LoggerUtil;
@@ -8,7 +9,7 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -21,7 +22,14 @@ import java.lang.reflect.Method;
 @Component
 public class OperationLogAspect {
 
+    private final OperationLogRepository operationLogRepository;
+
     private static final Logger logger = LoggerUtil.getOperationLogger();
+
+    @Autowired
+    public OperationLogAspect(OperationLogRepository operationLogRepository) {
+        this.operationLogRepository = operationLogRepository;
+    }
 
     @Pointcut("@annotation(com.sicnu.bulb.selflog.OperationLog)")
     public void controllerAspect() {
@@ -33,7 +41,7 @@ public class OperationLogAspect {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         try {
             System.out.println("==============拦截到请求==============");
-            com.sicnu.bulb.entity.OperationLog log = new com.sicnu.bulb.entity.OperationLog();
+            com.sicnu.bulb.entity.table.OperationLog log = new com.sicnu.bulb.entity.table.OperationLog();
 
             String ip = IpUtil.getIpAddress(request);
             System.out.println("请求ip：" + ip);
@@ -59,6 +67,7 @@ public class OperationLogAspect {
 //                operationLog.append(param);
 //            }
 
+            operationLogRepository.save(log);
             logger.info(GsonUtil.getInstance().toJson(log));
         } catch (Exception e) {
             //记录本地异常日志
