@@ -72,6 +72,9 @@ public class ShiroConfig {
         filterMap.put("/getStockList", "perms[getStocks]");
         filterMap.put("/getDangerStock", "perms[getStocks]");
 
+        filterMap.put("/inventory", "roles[warehouse]");
+        filterMap.put("/getInventorys", "roles[warehouse]");
+
         //管理员的增删改查功能 需要拥有系统管理员角色
         filterMap.put("/admin/*", "roles[sys]");
 

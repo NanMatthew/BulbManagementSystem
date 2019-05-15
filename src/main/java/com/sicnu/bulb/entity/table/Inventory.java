@@ -36,10 +36,10 @@ public class Inventory implements Checkable {
 
 
     /**
-     * 实际库存
+     * 损耗数量
      */
     @Column(nullable = false)
-    private Long realInventory;
+    private Long lossNum;
 
     /**
      * 盘存时间
@@ -60,7 +60,7 @@ public class Inventory implements Checkable {
 
     @Override
     public boolean checkInvalid() {
-        return productId != 0 && realInventory != null && inventoryTime != null;
+        return productId != 0 && lossNum != null && inventoryTime != null;
     }
 
     public int getId() {
@@ -79,12 +79,12 @@ public class Inventory implements Checkable {
         this.productId = productId;
     }
 
-    public long getRealInventory() {
-        return realInventory;
+    public long getLossNum() {
+        return lossNum;
     }
 
-    public void setRealInventory(long realInventory) {
-        this.realInventory = realInventory;
+    public void setLossNum(long lossNum) {
+        this.lossNum = lossNum;
     }
 
     public Date getInventoryTime() {
