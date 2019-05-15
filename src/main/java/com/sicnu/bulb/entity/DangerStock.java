@@ -48,10 +48,6 @@ public class DangerStock {
         this.info = info;
     }
 
-    public static int getDangerTypeHigher() {
-        return DANGER_TYPE_HIGHER;
-    }
-
     public int getDangerType() {
         return dangerType;
     }

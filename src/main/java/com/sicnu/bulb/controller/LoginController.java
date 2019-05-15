@@ -1,10 +1,11 @@
 package com.sicnu.bulb.controller;
 
-import com.sicnu.bulb.entity.LoginLog;
+import com.sicnu.bulb.entity.table.LoginLog;
 import com.sicnu.bulb.entity.msg.LoginMsg;
 import com.sicnu.bulb.entity.msg.Msg;
 import com.sicnu.bulb.entity.msg.ResultCode;
 import com.sicnu.bulb.entity.table.Admin;
+import com.sicnu.bulb.repository.LoginLogRepository;
 import com.sicnu.bulb.util.GsonUtil;
 import com.sicnu.bulb.util.IpUtil;
 import com.sicnu.bulb.util.LoggerUtil;
@@ -13,6 +14,7 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +36,13 @@ public class LoginController {
     private static final int LOGIN_TYPE = 0;
     //退出登录操作
     private static final int LOGOUT_TYPE = 1;
+
+    private final LoginLogRepository loginLogRepository;
+
+    @Autowired
+    public LoginController(LoginLogRepository loginLogRepository) {
+        this.loginLogRepository = loginLogRepository;
+    }
 
     /**
      * 登录
@@ -98,6 +107,7 @@ public class LoginController {
         }
 //        System.out.println("LoginLog=====" + GsonUtil.getInstance().toJson(log));
         LoggerUtil.getLoginLogger().info(GsonUtil.getInstance().toJson(log));
+        loginLogRepository.save(log);
     }
 
 }

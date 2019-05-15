@@ -1,13 +1,16 @@
 package com.sicnu.bulb.controller;
 
 import com.google.gson.JsonSyntaxException;
-import com.sicnu.bulb.entity.LoginLog;
+import com.sicnu.bulb.entity.table.LoginLog;
 import com.sicnu.bulb.entity.OperationLog;
 import com.sicnu.bulb.entity.msg.LogMsg;
 import com.sicnu.bulb.entity.msg.Msg;
+import com.sicnu.bulb.repository.LoginLogRepository;
 import com.sicnu.bulb.util.FileUtil;
 import com.sicnu.bulb.util.GsonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
@@ -44,6 +47,13 @@ public class LogController {
     private static final String LOGIN_LOG = FILE_PATH + "login.log";
 
 
+    private final LoginLogRepository loginLogRepository;
+
+    @Autowired
+    public LogController(LoginLogRepository loginLogRepository) {
+        this.loginLogRepository = loginLogRepository;
+    }
+
     /**
      * 获取操作日志
      *
@@ -63,7 +73,32 @@ public class LogController {
     @com.sicnu.bulb.selflog.OperationLog(description = "获取登录日志")
     @GetMapping("/log/loginLogs")
     public Msg getLoginLogs() {
-        return readLoginLogs();
+        return new LogMsg<>(loginLogRepository.findAll());
+    }
+
+    /**
+     * 获取登录日志(分页)
+     *
+     * @return {@link Msg}
+     */
+    @com.sicnu.bulb.selflog.OperationLog(description = "获取登录日志(分页)")
+    @GetMapping("/log/loginLogsPage")
+    public Msg getLoginLogsPage(@RequestParam("currentPage") int currentPage,
+                                @RequestParam("prePageNum") int prePageNum) {
+
+        int totalNum = loginLogRepository.queryTotalNum();
+
+        //总页数
+        int totalPage = totalNum / prePageNum;
+        if (totalPage * prePageNum < totalNum) {
+            totalPage++;
+        }
+
+        //开始数
+        int start = (currentPage - 1) * prePageNum;
+
+        List<LoginLog> currentPageLogs = loginLogRepository.getCurrentPageLogs(start, prePageNum);
+        return new LogMsg<>(currentPageLogs, currentPage, totalPage);
     }
 
     /**

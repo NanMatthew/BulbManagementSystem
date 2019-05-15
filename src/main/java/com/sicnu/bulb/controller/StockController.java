@@ -72,6 +72,7 @@ public class StockController {
      *
      * @return {@link Msg}
      */
+    @OperationLog(description = "获取库存警报")
     @GetMapping("/getDangerStock")
     public Msg getDangerStock() {
         try {

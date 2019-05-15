@@ -1,9 +1,9 @@
-package com.sicnu.bulb.entity;
+package com.sicnu.bulb.entity.table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sicnu.bulb.entity.table.Admin;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -13,7 +13,18 @@ import java.util.Date;
  * 登录日志
  */
 @SuppressWarnings("unused")
+@Entity
+@Table(name = "tb_login_log")
 public class LoginLog {
+
+    /**
+     * id
+     * <p>
+     * 自增序列
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     /**
      * 操作类型
@@ -41,6 +52,15 @@ public class LoginLog {
         this.loginIp = loginIp;
         this.username = admin.getUsername();
         this.adminName = admin.getName();
+        this.loginTime = new Date();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLoginIp() {
