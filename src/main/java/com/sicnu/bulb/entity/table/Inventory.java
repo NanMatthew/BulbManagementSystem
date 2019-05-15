@@ -1,6 +1,7 @@
 package com.sicnu.bulb.entity.table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sicnu.bulb.entity.Checkable;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -9,13 +10,13 @@ import java.util.Date;
 /**
  * Created by HY
  * 2019/4/10 21:29
- *
+ * <p>
  * 盘存表
  */
 @SuppressWarnings("unused")
 @Entity
 @Table(name = "tb_inventory")
-public class Inventory {
+public class Inventory implements Checkable {
 
     /**
      * id
@@ -38,7 +39,7 @@ public class Inventory {
      * 实际库存
      */
     @Column(nullable = false)
-    private long realInventory;
+    private Long realInventory;
 
     /**
      * 盘存时间
@@ -55,6 +56,11 @@ public class Inventory {
 
 
     public Inventory() {
+    }
+
+    @Override
+    public boolean checkInvalid() {
+        return productId != 0 && realInventory != null && inventoryTime != null;
     }
 
     public int getId() {

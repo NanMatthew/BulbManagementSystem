@@ -40,6 +40,9 @@ public class Outbound implements Checkable {
     @JoinColumn(name = "productId", insertable = false, updatable = false)
     private Product product;
 
+    //出库类型 0为零售 1为批发
+    private int outboundType;
+
     /**
      * 出库数量
      */
@@ -98,6 +101,14 @@ public class Outbound implements Checkable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getOutboundType() {
+        return outboundType;
+    }
+
+    public void setOutboundType(int outboundType) {
+        this.outboundType = outboundType;
     }
 
     public String getCustomer() {

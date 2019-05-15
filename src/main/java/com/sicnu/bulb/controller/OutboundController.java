@@ -5,6 +5,7 @@ import com.sicnu.bulb.entity.msg.OutboundListMsg;
 import com.sicnu.bulb.entity.msg.OutboundMsg;
 import com.sicnu.bulb.entity.table.Outbound;
 import com.sicnu.bulb.entity.table.Product;
+import com.sicnu.bulb.entity.table.Stock;
 import com.sicnu.bulb.repository.OutboundRepository;
 import com.sicnu.bulb.repository.ProductRepository;
 import com.sicnu.bulb.repository.StockRepository;
@@ -63,9 +64,15 @@ public class OutboundController {
             if (!outbound.checkInvalid()) {
                 return Msg.errorMsg("表单填写有误");
             }
+            Optional<Product> byId = productRepository.findById(outbound.getProductId());
+            if (!byId.isPresent()) {
+                return Msg.errorMsg("产品不存在");
+            }
+            Stock stock = stockRepository.findByProductId(outbound.getProductId());
+            if (stock.getStock() < outbound.getOutboundNum()) {
+                return Msg.errorMsg("产品库存不足");
+            }
             Outbound save = outboundRepository.save(outbound);
-            Optional<Product> byId = productRepository.findById(save.getProductId());
-            //noinspection OptionalGetWithoutIsPresent
             save.setProduct(byId.get());
             stockRepository.updateStock(save.getProductId(), -save.getOutboundNum());
             return new OutboundMsg(save);
