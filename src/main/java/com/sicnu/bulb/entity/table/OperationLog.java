@@ -1,8 +1,9 @@
-package com.sicnu.bulb.entity;
+package com.sicnu.bulb.entity.table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -12,7 +13,18 @@ import java.util.Date;
  * 操作日志
  */
 @SuppressWarnings("unused")
+@Entity
+@Table(name = "tb_operation_log")
 public class OperationLog {
+
+    /**
+     * id
+     * <p>
+     * 自增序列
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String requestIp;
 
@@ -35,6 +47,14 @@ public class OperationLog {
 
     public OperationLog() {
         this.requestTime = new Date();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getRequestIp() {
